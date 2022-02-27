@@ -28,11 +28,11 @@ class GraphicPresent:
         os.mkdir("./temp_displayArray")
 
         plt.rcParams['axes.facecolor'] = 'black'
-        fig = plt.figure(figsize=(10, 6), dpi=300, facecolor='black')
+        fig = plt.figure(figsize=(10, 6), dpi=100, facecolor='black')
         ax = fig.add_subplot(111)
 
-        plt.xlim(x_value[0], x_value[-1]-x_value[0*x_stretch])
-        plt.ylim(y_value[0], y_value[-1]-y_value[0]*y_stretch)
+        plt.xlim(x_value[0], (x_value[-1]-x_value[0])*x_stretch)
+        plt.ylim(y_value[0], (y_value[-1]-y_value[0])*y_stretch)
         for spine in ['top', 'right', "bottom", "left"]:
             ax.spines[spine].set_color("white")
         ax.set_xlabel('Dimension')
@@ -50,7 +50,8 @@ class GraphicPresent:
                 count = count+1
                 displayArray_x = np.append(displayArray_x, x_value[i])
                 displayArray_y = np.append(displayArray_y, y_value[i])
-                ax.plot(displayArray_x, displayArray_y, color="white")
+                ax.plot(displayArray_x, displayArray_y, "w-")
+                ax.plot(displayArray_x,displayArray_x, "w--")
                 plt.savefig(f'./temp_displayArray/displayArray_{str(j).zfill(10)}.png')
 
         if os.path.exists("out.mp4"):
@@ -62,9 +63,15 @@ class GraphicPresent:
 
 def main():
     ec = GraphicPresent()
-    x_lim = [0, 100, 1]
-    x_value = np.arange(x_lim[0],x_lim[1],x_lim[2])
+    x_lim = [0, 10, 1]
+    # x_value = np.arange(x_lim[0],x_lim[1],x_lim[2])
+    x_value = np.array([0,1+1,2+2,3+3,4+4,5+5,6+6,7+7,8+8,9+9,10+10])
     y_value = ec._qsrt(x_value)
+    print(y_value)
+    
+    
+    
+    
     ec._2D_Data_Video(x_value, y_value,y_stretch = 2)
 
 if __name__ == '__main__':
