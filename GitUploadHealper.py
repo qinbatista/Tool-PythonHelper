@@ -8,7 +8,6 @@ class GitUploadHelper:
         self.__ignore_file_list = [".DS_Store"]
         self.__folder_name = ""
         self.__analysis_folder_name(__args)
-        self.__folder_name = "/Users/qin/Desktop/SoundVFX"
 
     def __list_repositories(self, _path):
         _folder_list = []
@@ -17,7 +16,6 @@ class GitUploadHelper:
                 for filename in filenames:
                     if self.__is_contain_the_key_in_ignore_file_list(filename) == False:
                         _folder_list.append(os.path.join(dirpath, filename))
-                        # print(dirpath + "/" + filename)
         return _folder_list
 
     def __is_contain_the_key_in_ignore_folder_list(self, key):
@@ -40,11 +38,8 @@ class GitUploadHelper:
 
     def __upload_part(self, __file_list):
         os.chdir(self.__folder_name)
-        # print(__file_list)
         _add_list = []
         for file_name in __file_list:
-            # print("os.path.basename(file_name)=" + os.path.basename(file_name))
-            # file_name = os.path.basename(file_name.replace(" ", "\\"))
             os.system(f"git add '{file_name}'")
             _add_list.append(file_name)
 
@@ -54,7 +49,6 @@ class GitUploadHelper:
     def _start(self):
         _files_ = self.__list_repositories(self.__folder_name)
         bash_list = self.__get_files_batch(_files_)
-        # print(bash_list)
         for index, _list in enumerate(bash_list):
             self.__upload_part(_list)
             print(f"batch {index+1} of {len(bash_list)} uploaded")
